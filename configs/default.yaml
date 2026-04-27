@@ -1,0 +1,23 @@
+model:
+  name: "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+  load_in_4bit: true
+  quant_type: "nf4"
+  double_quant: true
+  compute_dtype: "float16"
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+
+training:
+  dataset: "yahma/alpaca-cleaned"
+  num_samples: 5000
+  max_length: 512
+  batch_size: 1
+  grad_accumulation: 4
+  learning_rate: 2e-4
+  num_epochs: 3
+  warmup_ratio: 0.03
+  output_dir: "./results"
